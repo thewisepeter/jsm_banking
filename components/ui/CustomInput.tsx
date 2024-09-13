@@ -8,11 +8,27 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { authFormSchema } from '@/lib/utils';
+import { Control, FieldPath } from 'react-hook-form';
+import { z } from 'zod';
 
-const CustomInput = ({ form, name, label, placeholder, type }) => {
+const formSchema = authFormSchema('sign-up');
+interface CustomInputProps {
+  control: Control<z.infer<typeof formSchema>>;
+  name: FieldPath<z.infer<typeof formSchema>>;
+  label: string;
+  placeholder: string;
+}
+
+const CustomInput = ({
+  control,
+  name,
+  label,
+  placeholder,
+}: CustomInputProps) => {
   return (
     <FormField
-      control={form.control}
+      control={control}
       name={name}
       render={({ field }) => (
         <div className="form-item">
@@ -22,7 +38,7 @@ const CustomInput = ({ form, name, label, placeholder, type }) => {
               <Input
                 placeholder={placeholder}
                 className="input-class"
-                type={type}
+                type={name === 'password' ? 'password' : 'text'}
                 {...field}
               />
             </FormControl>
