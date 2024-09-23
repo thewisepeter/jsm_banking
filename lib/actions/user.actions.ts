@@ -27,7 +27,7 @@ export const signUp = async (userData: SignUpParams) => {
       ID.unique(),
       email,
       password,
-      `${firstName} ${lastName}`
+      `${firstName} ${lastName}`,
     );
     const session = await account.createEmailPasswordSession(email, password);
 
